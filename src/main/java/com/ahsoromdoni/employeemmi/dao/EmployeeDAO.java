@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeDAO extends JpaRepository<Employee, Integer> {
-//    boolean existsEmployeeById
+    boolean existsEmployeeByIdNumber(Integer id);
 }

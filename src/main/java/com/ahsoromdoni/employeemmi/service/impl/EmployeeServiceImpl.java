@@ -1,34 +1,66 @@
 package com.ahsoromdoni.employeemmi.service.impl;
 
+import com.ahsoromdoni.employeemmi.dao.EmployeeDAO;
 import com.ahsoromdoni.employeemmi.entity.Employee;
+import com.ahsoromdoni.employeemmi.entity.Position;
+import com.ahsoromdoni.employeemmi.exception.BadRequestException;
+import com.ahsoromdoni.employeemmi.exception.NotFoundException;
 import com.ahsoromdoni.employeemmi.service.EmployeeService;
+import com.ahsoromdoni.employeemmi.service.PositionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import java.util.List;
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
+
+    @Autowired
+    EmployeeDAO employeeDAO;
+
+    @Autowired
+    PositionService positionService;
+
     @Override
     public Employee insert(Employee entity) {
-        return null;
+        if (employeeDAO.existsEmployeeByIdNumber(entity.getIdNumber())){
+            throw new BadRequestException("NIP was using by another employee. Please insert another NIP");
+        }
+        Position position = positionService.getById(entity.getPositionId());
+        entity.setPosition(position);
+        return employeeDAO.save(entity);
     }
 
     @Override
     public Employee update(Employee entity) {
-        return null;
+        if (employeeDAO.existsEmployeeByIdNumber(entity.getIdNumber())){
+            throw new BadRequestException("NIP was using by another employee. Please insert another NIP");
+        }
+        return employeeDAO.save(entity);
     }
 
     @Override
-    public Employee delete(Employee entity) {
-        return null;
+    public void delete(Employee entity) {
+        employeeDAO.delete(entity);
     }
 
     @Override
     public Employee getById(Integer id) {
-        return null;
+        if(!employeeDAO.findById(id).isPresent()){
+            throw new NotFoundException("Id not found!");
+        }
+        return employeeDAO.findById(id).get();
+    }
+
+    @Override
+    public List<Employee> getList() {
+        return employeeDAO.findAll();
     }
 
     @Override
     public Page<Employee> getListForPagination(Pageable pager) {
-        return null;
+        return employeeDAO.findAll(pager);
     }
 }
