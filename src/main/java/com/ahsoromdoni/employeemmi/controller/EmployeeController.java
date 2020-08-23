@@ -25,7 +25,7 @@ public class EmployeeController {
         Integer usedPage = page!=null ? page-1 : 0;
         Pageable pageable = PageRequest.of(usedPage, 5);
         return employeeService.getListForPagination(pageable);
-    };
+    }
 
     @GetMapping("/{id}")
     public EmployeeDTO addEdit(@PathVariable Integer id){
@@ -40,16 +40,16 @@ public class EmployeeController {
     @PostMapping
     public Employee insert(@RequestBody Employee employee){
         return employeeService.insert(employee);
-    };
+    }
 
     @PutMapping
     public Employee update(@RequestBody Employee employee){
         return employeeService.update(employee);
-    };
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id){
         Employee employee = employeeService.getById(id);
         employeeService.delete(employee);
-    };
+    }
 }
