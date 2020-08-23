@@ -28,16 +28,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeDAO.existsEmployeeByIdNumber(entity.getIdNumber())){
             throw new BadRequestException("NIP was using by another employee. Please insert another NIP");
         }
-        Position position = positionService.getById(entity.getPositionId());
-        entity.setPosition(position);
+        entity.setPosition(positionService.getById(entity.getPositionId()));
         return employeeDAO.save(entity);
     }
 
     @Override
     public Employee update(Employee entity) {
-        if (employeeDAO.existsEmployeeByIdNumber(entity.getIdNumber())){
+        Boolean isSame = false;
+        if(!employeeDAO.findById(entity.getId()).isPresent()){
+            throw new NotFoundException("Id not found!");
+        }
+
+        isSame = employeeDAO.findById(entity.getId()).get().getIdNumber().equals(entity.getIdNumber());
+
+        if (!isSame && employeeDAO.existsEmployeeByIdNumber(entity.getIdNumber())){
             throw new BadRequestException("NIP was using by another employee. Please insert another NIP");
         }
+
+        entity.setPosition(positionService.getById(entity.getPositionId()));
         return employeeDAO.save(entity);
     }
 
