@@ -1,14 +1,12 @@
 package com.ahsoromdoni.employeemmi.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "T2_EMPLOYEE")
@@ -18,7 +16,6 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     private String name;
-    @JsonFormat(pattern = "YYYY-mm-DD")
     private Date birthDate;
     @ManyToOne
     @JoinColumn(name = "POSITION_ID")
