@@ -24,6 +24,12 @@ INSERT INTO t1_position(id, code, name, is_delete) values
 -Open your terminal in current path
 -cd spring-boot-employee-crud
 ```
+#### setup application properties
+In folder spring-boot-employee-crud/src/main/resources/application-local.properties you can set your database information.
+```
+spring.datasource.username=root
+spring.datasource.password=root
+```
 After you are in the project folder then type this command below, this command for create .jar file. Jar file that created will be in folder tager with name-ish employee-mmi-0.0.1-SNAPSHOT.jar. 
 ```
 mvn package
