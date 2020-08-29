@@ -24,7 +24,7 @@ INSERT INTO t1_position(id, code, name, is_delete) values
 -Open your terminal in current path
 -cd spring-boot-employee-crud
 ```
-#### setup application properties
+#### Setup application properties
 In folder spring-boot-employee-crud/src/main/resources/application-local.properties you can set your database information.
 ```
 spring.datasource.username=root
